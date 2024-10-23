@@ -1,0 +1,59 @@
+{
+    "configurations": [
+        {
+            "type": "debugpy",
+            "request": "launch",
+            "name": "Launch OSS Recovery Script",
+            "program": "${workspaceFolder}/main.py",
+            "args": [
+                "--access-key-id",
+                "${input:accessKeyId}",
+                "--access-key-secret",
+                "${input:accessKeySecret}",
+                "--endpoint",
+                "${input:endpoint}",
+                "--bucket-name",
+                "${input:bucketName}",
+                "--folder-prefix",
+                "${input:folderPrefix}",
+                "--recovery-time",
+                "${input:recoveryTime}",
+                "--dry-run",
+                "--delete-newer-objects"
+            ],
+            "console": "integratedTerminal"
+        }
+    ],
+    "inputs": [
+        {
+            "type": "promptString",
+            "id": "accessKeyId",
+            "description": "Your Alibaba Cloud Access Key ID"
+        },
+        {
+            "type": "promptString",
+            "id": "accessKeySecret",
+            "description": "Your Alibaba Cloud Access Key Secret"
+        },
+        {
+            "type": "promptString",
+            "id": "endpoint",
+            "description": "Your OSS endpoint (e.g., https://oss-region.aliyuncs.com)"
+        },
+        {
+            "type": "promptString",
+            "id": "bucketName",
+            "description": "Your OSS bucket name"
+        },
+        {
+            "type": "promptString",
+            "id": "folderPrefix",
+            "description": "The folder prefix to recover (e.g., 'my-folder/')"
+        },
+        {
+            "type": "promptString",
+            "id": "recoveryTime",
+            "description": "Recovery time in UTC (e.g., '2023-10-07T14:24:00Z')"
+        }
+    ]
+}

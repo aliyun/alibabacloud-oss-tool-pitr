@@ -1,0 +1,101 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+env/
+venv/
+ENV/
+build/
+dist/
+*.egg-info/
+*.egg
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# macOS
+.DS_Store
+
+# Windows
+tumbs.db
+Thumbs.db
+
+# Environment variables / settings
+.env
+*.env
+
+# Logs and databases
+*.log
+*.sqlite3
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+
+# Virtual environments
+env/
+venv/
+
+# Ignore credentials and private files
+credentials.json
+config.json
+
+# Python egg files
+*.egg
+*.egg-info/
+.eggs/
+
+# Wheel distribution
+*.whl
+
+# Files created by Python tools
+*.manifest
+*.spec
+
+# MyPy
+.mypy_cache/
+
+# PyInstaller
+dist/
+build/
+*.spec
+
+# pyenv
+env/
+.venv/
+
+# VS Code settings
+.vscode/
+
+# Specific to the current project
+# Temporary or cache files
+*.bak
+*.swp
+*.tmp
+
+# Ignore sensitive configuration files
+# such as your access keys or secrets
+keys.json
+access_keys.json
