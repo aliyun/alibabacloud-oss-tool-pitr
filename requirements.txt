@@ -1,3 +1,4 @@
 argparse
+alibabacloud_credentials
 oss2
 mock
