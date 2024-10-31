@@ -37,8 +37,8 @@ This script performs a point-in-time recovery for versioned buckets in Alibaba C
 
 The script supports the following arguments:
 
-- `--access-key-id` (required): Your Alibaba Cloud Access Key ID.
-- `--access-key-secret` (required): Your Alibaba Cloud Access Key Secret.
+- `--access-key-id`: Your Alibaba Cloud Access Key ID. Can also be provided via environment variable `ALIBABA_CLOUD_ACCESS_KEY_ID`.
+- `--access-key-secret`: Your Alibaba Cloud Access Key Secret. Required if you set `--access-key-id`. Can also be provided via environment variable `ALIBABA_CLOUD_ACCESS_KEY_SECRET`.
 - `--endpoint` (required): Your OSS endpoint (e.g., `oss-eu-central-1.aliyuncs.com`). This is region-specific.
 - `--bucket-name` (required): The name of the OSS bucket to operate on.
 - `--folder-prefix` (required): The folder prefix to recover (e.g., `my-folder/`). Specifies the prefix for the folder that needs recovery.

@@ -3,13 +3,32 @@
         {
             "type": "debugpy",
             "request": "launch",
-            "name": "Launch OSS Recovery Script",
+            "name": "Launch OSS Recovery Script - with credentials",
             "program": "${workspaceFolder}/main.py",
             "args": [
                 "--access-key-id",
                 "${input:accessKeyId}",
                 "--access-key-secret",
                 "${input:accessKeySecret}",
+                "--endpoint",
+                "${input:endpoint}",
+                "--bucket-name",
+                "${input:bucketName}",
+                "--folder-prefix",
+                "${input:folderPrefix}",
+                "--recovery-time",
+                "${input:recoveryTime}",
+                "--dry-run",
+                "--delete-newer-objects"
+            ],
+            "console": "integratedTerminal"
+        },
+        {
+            "type": "debugpy",
+            "request": "launch",
+            "name": "Launch OSS Recovery Script - without credentials",
+            "program": "${workspaceFolder}/main.py",
+            "args": [
                 "--endpoint",
                 "${input:endpoint}",
                 "--bucket-name",

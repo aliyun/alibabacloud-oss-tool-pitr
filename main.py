@@ -23,6 +23,7 @@ import argparse
 import logging
 from typing import Dict, Set, Any
 
+from alibabacloud_credentials.client import Client as CredClient
 import oss2
 
 logger = logging.getLogger(__name__)
@@ -30,8 +31,9 @@ logger = logging.getLogger(__name__)
 def parse_arguments() -> argparse.Namespace:
     """Parse command-line arguments for OSS Point-in-Time Recovery Script."""
     parser = argparse.ArgumentParser(description='OSS Point-in-Time Recovery Script')
-    parser.add_argument('--access-key-id', required=True, help='Your Alibaba Cloud Access Key ID')
-    parser.add_argument('--access-key-secret', required=True, help='Your Alibaba Cloud Access Key Secret')
+    auth_group = parser.add_argument_group('Authentication')
+    auth_group.add_argument('--access-key-id', help='Your Alibaba Cloud Access Key ID. Can also be provided via environment variable `ALIBABA_CLOUD_ACCESS_KEY_ID`.')
+    auth_group.add_argument('--access-key-secret', help='Your Alibaba Cloud Access Key Secret. Can also be provided via environment variable `ALIBABA_CLOUD_ACCESS_KEY_SECRET`.')
     parser.add_argument('--endpoint', required=True, help='Your OSS endpoint (e.g., oss-region.aliyuncs.com)')
     parser.add_argument('--bucket-name', required=True, help='Your OSS bucket name')
     parser.add_argument('--folder-prefix', required=True, help='The folder prefix to recover (e.g., "my-folder/")')
@@ -40,7 +42,13 @@ def parse_arguments() -> argparse.Namespace:
     parser.add_argument('--delete-newer-objects', action='store_true',
                         help='Delete objects if their earliest version is after the recovery timestamp')
     parser.add_argument('--debug', action='store_true', help='Enable debug logging')
-    return parser.parse_args()
+
+    args = parser.parse_args()
+
+    if args.access_key_id is not None and args.access_key_secret is None:
+        logger.error("Access key secret is required when using access key ID")
+        sys.exit(1)
+    return args
 
 def parse_recovery_time(recovery_time_str: str) -> datetime.datetime:
     """Parse the recovery time from the argument."""
@@ -53,7 +61,14 @@ def parse_recovery_time(recovery_time_str: str) -> datetime.datetime:
 
 def initialize_oss_client(access_key_id: str, access_key_secret: str, endpoint: str, bucket_name: str) -> oss2.Bucket:
     """Initialize the OSS client."""
-    auth = oss2.Auth(access_key_id, access_key_secret)
+
+    auth = None
+    if access_key_id is not None:
+        auth = oss2.Auth(access_key_id, access_key_secret)
+    else:
+        logger.debug("default credential provider chain")
+        cred = CredClient()
+        auth = oss2.Auth(cred.get_credential().get_access_key_id(), cred.get_credential().get_access_key_secret())
     return oss2.Bucket(auth, endpoint, bucket_name)
 
 def recover_objects(bucket: oss2.Bucket, prefix: str, recovery_time: datetime.datetime, dry_run: bool = False, delete_newer: bool = False) -> None:
